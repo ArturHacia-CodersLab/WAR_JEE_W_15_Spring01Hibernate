@@ -2,6 +2,7 @@ package pl.coderslab.book;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.author.Author;
 import pl.coderslab.author.AuthorService;
@@ -16,9 +17,9 @@ public class BookController {
     private final AuthorService authorService;
 
     @RequestMapping("/book/all")
-    @ResponseBody
-    public String getAll() {
-        return bookService.getAll().toString();
+    public String getAll(Model model) {
+        model.addAttribute("books", bookService.getAll());
+        return "book/all";
     }
 
     @RequestMapping("/book/all/{rating}")
