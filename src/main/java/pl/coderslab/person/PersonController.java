@@ -2,9 +2,8 @@ package pl.coderslab.person;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.author.Author;
 import pl.coderslab.book.Book;
 import pl.coderslab.publisher.Publisher;
@@ -14,9 +13,15 @@ import pl.coderslab.publisher.Publisher;
 public class PersonController {
     private final PersonService personService;
 
-    @RequestMapping("/person/add")
+    @GetMapping("/person/add")
+    public String addPerson(Model model) {
+        model.addAttribute("person", new Person());
+        return "person/form";
+    }
+
+    @PostMapping("/person/add")
     @ResponseBody
-    public String savePerson() {
+    public String savePerson(@ModelAttribute Person person) {
         PersonDetails personDetails = new PersonDetails();
         personDetails.setFirstName("Artur");
         personDetails.setLastName("Hacia");
@@ -24,10 +29,7 @@ public class PersonController {
         personDetails.setStreet("Prosta");
         personDetails.setCity("Warszawa");
 
-        Person person = new Person();
-        person.setLogin("artur.hacia");
-        person.setPassword("123456");
-        person.setEmail("artur.hacia@coderslab.pl");
+        //Person person = new Person(login, password, email);
         person.setPersonDetails(personDetails);
 
         personService.savePerson(person);

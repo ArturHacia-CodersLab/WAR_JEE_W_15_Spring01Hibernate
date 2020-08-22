@@ -1,6 +1,7 @@
 package pl.coderslab.person;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,11 +10,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @Entity
 @Table(name = Person.TABLE)
 public class Person {
     public final static String TABLE = "persons";
     private final static String PERSON_DETAIL_COLUMN = "detail_id";
+
+    public Person(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
