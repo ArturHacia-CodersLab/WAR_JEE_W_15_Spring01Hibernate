@@ -71,4 +71,30 @@ public class BookController {
         bookService.delete(book);
         return "deleted";
     }
+
+    @RequestMapping("/book/all/publisher")
+    @ResponseBody
+    public String getBookWithPublisher() {
+        return bookService.getBookWithPublisher().toString();
+    }
+
+    @RequestMapping("/book/all/publisher/{id}")
+    @ResponseBody
+    public String getBookWithPublisher(@PathVariable int id) {
+        Publisher publisher = publisherService.findById(id);
+        if (publisher == null) {
+            return "Nie ma takiego wydawcy";
+        }
+        return bookService.getBookWithPublisher(publisher).toString();
+    }
+
+    @RequestMapping("/book/all/author/{id}")
+    @ResponseBody
+    public String getBookWithAuthor(@PathVariable int id) {
+        Author author = authorService.findById(id);
+        if (author == null) {
+            return "Nie ma takiego autora";
+        }
+        return bookService.getBookWithAuthor(author).toString();
+    }
 }

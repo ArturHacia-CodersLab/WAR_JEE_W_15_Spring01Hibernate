@@ -12,6 +12,12 @@ import pl.coderslab.author.Author;
 public class PublisherController {
     private final PublisherService publisherService;
 
+    @RequestMapping("/publisher/all")
+    @ResponseBody
+    public String getAll() {
+        return publisherService.getAll().toString();
+    }
+
     @RequestMapping("/publisher/add")
     @ResponseBody
     public String savePublisher() {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.book.Book;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -26,5 +27,9 @@ public class AuthorService {
 
     public void delete(Author author) {
         authorDao.delete(author);
+    }
+
+    public List<Author> getAll() {
+        return authorDao.getAll();
     }
 }

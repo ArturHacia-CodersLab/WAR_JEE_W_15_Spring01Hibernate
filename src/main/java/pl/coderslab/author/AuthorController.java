@@ -12,6 +12,12 @@ import pl.coderslab.book.Book;
 public class AuthorController {
     private final AuthorService authorService;
 
+    @RequestMapping("/author/all")
+    @ResponseBody
+    public String getAll() {
+        return authorService.getAll().toString();
+    }
+
     @RequestMapping("/author/add")
     @ResponseBody
     public String saveAuthor() {

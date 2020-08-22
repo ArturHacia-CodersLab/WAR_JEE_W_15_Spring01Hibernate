@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.author.Author;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -26,5 +27,9 @@ public class PublisherService {
 
     public void delete(Publisher publisher) {
         publisherDao.delete(publisher);
+    }
+
+    public List<Publisher> getAll() {
+        return publisherDao.getAll();
     }
 }

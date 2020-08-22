@@ -3,6 +3,7 @@ package pl.coderslab.book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.author.Author;
+import pl.coderslab.publisher.Publisher;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,6 +36,18 @@ public class BookService {
 
     public List<Book> getRatingList(int rating) {
         return bookDao.getRatingList(rating);
+    }
+
+    public List<Book> getBookWithPublisher() {
+        return bookDao.getBookWithPublisher();
+    }
+
+    public List<Book> getBookWithPublisher(Publisher publisher) {
+        return bookDao.getBookWithPublisher(publisher);
+    }
+
+    public List<Book> getBookWithAuthor(Author author) {
+        return bookDao.getBookWithAuthor(author);
     }
 
     public void addAuthor(Book book, Author author) {
