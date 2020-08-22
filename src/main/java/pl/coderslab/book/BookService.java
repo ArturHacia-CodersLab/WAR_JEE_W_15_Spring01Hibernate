@@ -29,6 +29,14 @@ public class BookService {
         bookDao.delete(book);
     }
 
+    public List<Book> getAll() {
+        return bookDao.getAll();
+    }
+
+    public List<Book> getRatingList(int rating) {
+        return bookDao.getRatingList(rating);
+    }
+
     public void addAuthor(Book book, Author author) {
         List<Author> authors = book.getAuthors();
         authors.add(author);

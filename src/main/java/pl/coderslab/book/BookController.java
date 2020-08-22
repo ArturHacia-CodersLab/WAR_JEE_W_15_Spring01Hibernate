@@ -15,6 +15,18 @@ public class BookController {
     private final PublisherService publisherService;
     private final AuthorService authorService;
 
+    @RequestMapping("/book/all")
+    @ResponseBody
+    public String getAll() {
+        return bookService.getAll().toString();
+    }
+
+    @RequestMapping("/book/all/{rating}")
+    @ResponseBody
+    public String getRatingList(@PathVariable int rating) {
+        return bookService.getRatingList(rating).toString();
+    }
+
     @RequestMapping("/book/add")
     @ResponseBody
     public String saveBook() {
@@ -27,7 +39,7 @@ public class BookController {
 
         Book book = new Book();
         book.setTitle("Czas Horusa");
-        book.setRating(8);
+        book.setRating(7);
         book.setDescription("Warhammer 40k");
         book.setPublisher(publisher);
         bookService.addAuthor(book, author1);
