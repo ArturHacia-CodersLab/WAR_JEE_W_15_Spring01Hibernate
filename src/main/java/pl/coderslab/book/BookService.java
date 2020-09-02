@@ -63,6 +63,10 @@ public class BookService {
         return bookDao.getBookWithAuthor(author);
     }
 
+    public void deleteBooksForPublisher(Publisher publisher) {
+        bookDao.deleteBooksForPublisher(publisher);
+    }
+
     public void addAuthor(Book book, Author author) {
         List<Author> authors = book.getAuthors();
         authors.add(author);

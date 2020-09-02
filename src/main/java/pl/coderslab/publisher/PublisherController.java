@@ -2,20 +2,22 @@ package pl.coderslab.publisher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.author.Author;
+import pl.coderslab.book.BookService;
 
 @RequiredArgsConstructor
 @Controller
 public class PublisherController {
     private final PublisherService publisherService;
+    private final BookService bookService;
 
     @RequestMapping("/publisher/all")
-    @ResponseBody
-    public String getAll() {
-        return publisherService.getAll().toString();
+    public String getAll(Model model) {
+        model.addAttribute("publishers", publisherService.getAll());
+        return "publisher/all";
     }
 
     @RequestMapping("/publisher/add")
@@ -44,10 +46,17 @@ public class PublisherController {
     }
 
     @RequestMapping("/publisher/delete/{id}")
-    @ResponseBody
     public String deletePublisher(@PathVariable long id) {
         Publisher publisher = publisherService.findById(id);
+        if (publisher == null) {
+            return "error";
+        }
+
+        // musimy skasować wszystkie książki z danego wydawnictwa
+        // Zrobiłem do tego specjalną metodę i zapytanie
+        bookService.deleteBooksForPublisher(publisher);
+
         publisherService.delete(publisher);
-        return "deleted";
+        return "redirect:/publisher/all";
     }
 }

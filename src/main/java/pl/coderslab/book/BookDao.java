@@ -60,4 +60,10 @@ public class BookDao {
         query.setParameter("author", author);
         return query.getResultList();
     }
+
+    public void deleteBooksForPublisher(Publisher publisher) {
+        Query query = entityManager.createQuery("delete from Book b where b.publisher = :publisher");
+        query.setParameter("publisher", publisher);
+        query.executeUpdate();
+    }
 }

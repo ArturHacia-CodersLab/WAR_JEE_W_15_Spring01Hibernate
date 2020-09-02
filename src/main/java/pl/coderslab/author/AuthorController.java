@@ -46,10 +46,12 @@ public class AuthorController {
     }
 
     @RequestMapping("/author/delete/{id}")
-    @ResponseBody
     public String deleteAuthor(@PathVariable long id) {
         Author author = authorService.findById(id);
+        if (author == null) {
+            return "error";
+        }
         authorService.delete(author);
-        return "deleted";
+        return "redirect:/author/all";
     }
 }

@@ -13,6 +13,7 @@
 </head>
 <body>
     <h1>Lista książek</h1>
+    <a href="/book/form">Dodaj książkę</a><br>
     <table border="1">
         <tr>
             <td>Id</td>

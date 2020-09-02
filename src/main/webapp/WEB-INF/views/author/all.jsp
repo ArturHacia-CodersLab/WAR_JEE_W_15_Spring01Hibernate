@@ -13,11 +13,13 @@
 </head>
 <body>
     <h1>Lista autorów</h1>
+    <a href="/author/form">Dodaj autora</a><br>
 <table border="1">
     <tr>
         <td>Id</td>
         <td>Imię</td>
         <td>Nazwisko</td>
+        <td>Rok urodzenia</td>
         <td>PESEL</td>
         <td>Email</td>
         <td>Książki</td>
@@ -28,11 +30,12 @@
             <td>${author.id}</td>
             <td>${author.firstName}</td>
             <td>${author.lastName}</td>
+            <td>${author.yearOfBirth}</td>
             <td>${author.pesel}</td>
             <td>${author.email}</td>
             <td>${author.books}</td>
             <td>
-                <a href="/author/edit/${author.id}">Edycja</a>
+                <a href="/author/edit/${author.id}">Edycja</a> <a href="/author/confirm/${author.id}">Kasowanie</a>
             </td>
         </tr>
     </c:forEach>
