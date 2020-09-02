@@ -1,6 +1,7 @@
 package pl.coderslab.author;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import pl.coderslab.book.Book;
 
@@ -31,5 +32,12 @@ public class AuthorService {
 
     public List<Author> getAll() {
         return authorDao.getAll();
+    }
+
+    public List<Author> getAllWithBooks() {
+        List<Author> authors = authorDao.getAll();
+        authors.stream()
+                .forEach(author -> Hibernate.initialize(author.getBooks()));
+        return authors;
     }
 }

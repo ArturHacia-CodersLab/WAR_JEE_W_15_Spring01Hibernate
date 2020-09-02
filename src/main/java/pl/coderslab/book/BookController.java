@@ -9,6 +9,8 @@ import pl.coderslab.author.AuthorService;
 import pl.coderslab.publisher.Publisher;
 import pl.coderslab.publisher.PublisherService;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class BookController {
@@ -18,7 +20,7 @@ public class BookController {
 
     @RequestMapping("/book/all")
     public String getAll(Model model) {
-        model.addAttribute("books", bookService.getAll());
+        model.addAttribute("books", bookService.getAllWithAuthors());
         return "book/all";
     }
 
@@ -66,11 +68,13 @@ public class BookController {
     }
 
     @RequestMapping("/book/delete/{id}")
-    @ResponseBody
     public String deleteBook(@PathVariable long id) {
         Book book = bookService.findById(id);
+        if (book == null) {
+            return "error";
+        }
         bookService.delete(book);
-        return "deleted";
+        return "redirect:/book/all";
     }
 
     @RequestMapping("/book/all/publisher")

@@ -11,19 +11,35 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <form:form method="post" modelAttribute="book">
+<%--        <form:errors path="*"/><br>--%>
+        <form:hidden path="id"/>
         Tytuł: <form:input path="title"/><br>
+        <form:errors path="title" cssClass="error"/><br>
         Rating:<br>
         <c:forEach begin="1" end="10" var="index">
             <form:radiobutton path="rating" label="${index}" value="${index}"/>
         </c:forEach><br>
+        <form:errors path="rating" cssClass="error"/><br>
         Opis: <form:textarea path="description" rows="5" cols="20"/><br>
-        Wydawca: <form:select path="publisher.id">
+        <form:errors path="description" cssClass="error"/><br>
+        Wydawca: <form:select path="publisher">
             <form:option value="0" label="wybierz wydawcę"/>
             <form:options items="${publishers}" itemValue="id" itemLabel="name"/>
-        </form:select>
+        </form:select><br>
+        <form:errors path="publisher" cssClass="error"/><br>
+        Autorzy:<br>
+        <form:select path="authors" items="${authors}" itemValue="id" itemLabel="fullName" multiple="true"/><br>
+        <form:errors path="authors" cssClass="error"/><br>
+        Strony: <form:input path="pages"/><br>
+        <form:errors path="pages" cssClass="error"/><br>
         <input type="submit" value="Wyślij">
     </form:form>
 </body>

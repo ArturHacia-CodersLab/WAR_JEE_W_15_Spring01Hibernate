@@ -3,12 +3,14 @@ package pl.coderslab.book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.author.Author;
 import pl.coderslab.author.AuthorService;
 import pl.coderslab.publisher.Publisher;
 import pl.coderslab.publisher.PublisherService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class BookFormController {
         return publisherService.getAll();
     }
 
+    @ModelAttribute("authors")
+    public List<Author> getAllAuthors() {
+        return authorService.getAll();
+    }
+
     @GetMapping("/form")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
@@ -31,10 +38,41 @@ public class BookFormController {
     }
 
     @PostMapping("/form")
-    public String saveBook(@ModelAttribute Book book) {
-        Author author = authorService.findById(1);
-        bookService.addAuthor(book, author);
+    public String saveBook(@Valid Book book, BindingResult result) {
+        if (result.hasErrors()) {
+            return "book/form";
+        }
         bookService.saveBook(book);
         return "redirect:/book/all";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable long id, Model model) {
+        Book book = bookService.findWithAuthorsById(id);
+        if (book == null) {
+            return "error";
+        }
+        model.addAttribute("book", book);
+        return "book/form";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String saveEditBook(@PathVariable long id, @ModelAttribute Book book) {
+        if (book.getId() != id) {
+            return "error";
+        }
+        bookService.update(book);
+        return "redirect:/book/all";
+    }
+
+    @RequestMapping("/confirm/{id}")
+    public String confirm(@PathVariable long id, Model model) {
+        Book book = bookService.findById(id);
+        if (book == null) {
+            return "error";
+        }
+        model.addAttribute("book", book);
+        return "book/confirm";
+    }
+
 }

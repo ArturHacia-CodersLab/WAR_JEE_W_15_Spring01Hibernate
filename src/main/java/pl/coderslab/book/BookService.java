@@ -1,6 +1,7 @@
 package pl.coderslab.book;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import pl.coderslab.author.Author;
 import pl.coderslab.publisher.Publisher;
@@ -22,6 +23,12 @@ public class BookService {
         return bookDao.findById(id);
     }
 
+    public Book findWithAuthorsById(long id) {
+        Book book = bookDao.findById(id);
+        Hibernate.initialize(book.getAuthors());
+        return book;
+    }
+
     public void update(Book book) {
         bookDao.update(book);
     }
@@ -32,6 +39,12 @@ public class BookService {
 
     public List<Book> getAll() {
         return bookDao.getAll();
+    }
+
+    public List<Book> getAllWithAuthors() {
+        List<Book> books = bookDao.getAll();
+        books.stream().forEach(book -> Hibernate.initialize(book.getAuthors()));
+        return books;
     }
 
     public List<Book> getRatingList(int rating) {
