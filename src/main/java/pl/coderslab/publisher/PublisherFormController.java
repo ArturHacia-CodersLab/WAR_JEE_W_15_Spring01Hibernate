@@ -41,9 +41,12 @@ public class PublisherFormController {
     }
 
     @PostMapping("/edit/{id}")
-    public String saveEditPublisher(@PathVariable long id, @ModelAttribute Publisher publisher) {
+    public String saveEditPublisher(@PathVariable long id, @Valid Publisher publisher, BindingResult result) {
         if (publisher.getId() != id) {
             return "error";
+        }
+        if (result.hasErrors()) {
+            return "/publisher/form";
         }
         publisherService.update(publisher);
         return "redirect:/publisher/all";

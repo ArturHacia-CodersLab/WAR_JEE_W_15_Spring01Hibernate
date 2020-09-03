@@ -18,12 +18,16 @@
     <tr>
         <td>Id</td>
         <td>Nazwa</td>
+        <td>NIP</td>
+        <td>REGON</td>
         <td></td>
     </tr>
     <c:forEach var="publisher" items="${publishers}">
         <tr>
             <td>${publisher.id}</td>
             <td>${publisher.name}</td>
+            <td>${publisher.nip}</td>
+            <td>${publisher.regon}</td>
             <td>
                 <a href="/publisher/edit/${publisher.id}">Edycja</a> <a href="/publisher/confirm/${publisher.id}">Kasowanie</a>
             </td>

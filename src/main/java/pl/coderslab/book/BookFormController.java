@@ -57,9 +57,12 @@ public class BookFormController {
     }
 
     @PostMapping("/edit/{id}")
-    public String saveEditBook(@PathVariable long id, @ModelAttribute Book book) {
+    public String saveEditBook(@PathVariable long id, @Valid Book book, BindingResult result) {
         if (book.getId() != id) {
             return "error";
+        }
+        if (result.hasErrors()) {
+            return "book/form";
         }
         bookService.update(book);
         return "redirect:/book/all";
